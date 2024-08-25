@@ -1,0 +1,33 @@
+name: Ci/Cd Pipe line React JS
+
+on: 
+    push:
+        branches: [ main]
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+
+jobs:
+    build_deploye:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v3
+            
+            - name: Setup-NOdejs 18
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+            - name: install dependicies
+              run: npm install
+            - name: Build the project
+              run: npm run build
+            - name: Deploye to gihub pages
+              uses: JamesIves/github-pages-deploy-action@v4.1.0
+              with:
+                branch: gh-pages
+                folder: build
+
